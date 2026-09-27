@@ -17,6 +17,9 @@ app.use('/api/sales/update', require('./api/sales/update'));
 app.use('/api/createPaymentLink', require('./api/createPaymentLink'));
 app.use('/api/getPaymentLinkDetails', require('./api/getPaymentLinkDetails'));
 
+// WhatsApp (Flaxxa WAPI) — token from env
+app.use('/api/whatsapp/send-template', require('./api/whatsapp/send-template'));
+
 // Cashfree PG (orders + payments: UPI, cards, netbanking via payment_session_id)
 app.post('/api/payments/create-order', require('./api/payments/create-order'));
 app.get('/api/payments/order', require('./api/payments/get-order'));
