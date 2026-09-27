@@ -1,7 +1,10 @@
 // GET /api/getPaymentLinkDetails?link_id=xxx — via shared lib/cashfree.js.
+const { addCorsHeaders, handleCorsPreflight } = require('../utils/cors');
 const { cfRequest } = require('../lib/cashfree');
 
 module.exports = async function handler(req, res) {
+    if (handleCorsPreflight(req, res)) return;
+    addCorsHeaders(res, req.headers.origin || '*');
     if (req.method !== 'GET') return res.status(405).json({ error: 'Only GET allowed' });
     const { link_id } = req.query;
     if (!link_id) return res.status(400).json({ error: 'link_id is required' });

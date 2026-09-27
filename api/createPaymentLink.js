@@ -1,7 +1,10 @@
 // POST /api/createPaymentLink — via shared lib/cashfree.js (no hardcoded keys).
+const { addCorsHeaders, handleCorsPreflight } = require('../utils/cors');
 const { cfRequest } = require('../lib/cashfree');
 
 module.exports = async function handler(req, res) {
+    if (handleCorsPreflight(req, res)) return;
+    addCorsHeaders(res, req.headers.origin || '*');
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
     try {
         const data = await cfRequest('POST', '/links', { body: req.body });
